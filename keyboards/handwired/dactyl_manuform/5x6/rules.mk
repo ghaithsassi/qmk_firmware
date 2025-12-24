@@ -1,0 +1,5 @@
+# Add oled
+OLED_ENABLE = yes
+OLED_TRANSPORT = i2c
+LTO_ENABLED = yes
+WPM_ENABLE = yes
