@@ -10,9 +10,10 @@
     },
     "features": {
         "bootmagic": true,
+        "console": true,
         "command": true,
         "extrakey": true,
-        "mousekey": true,
+        "mousekey": false,
         "nkro": false
     },
     "qmk": {
@@ -37,13 +38,62 @@
         "pin": "F6"
     },
     "rgblight": {
+        "hue_steps": 4,
+        "saturation_steps": 8,
+        "brightness_steps": 8,
         "led_count": 25,
+        "max_brightness": 200,
+        "sleep": true,
         "animations": {
-            "solid_color": true,
             "breathing": true,
-            "rainbow_moving_chevron": true
+            "rainbow_mood": true,
+            "rainbow_swirl": true,
+            "snake": true,
+            "knight": true,
+            "christmas": true,
+            "static_gradient": true,
+            "rgb_test": true,
+            "alternating": true,
+            "twinkle": true
         }
     },
+
+
+    "rgb_matrix": {
+        "default": {
+            "val": 150
+        },
+        "driver": "ws2812",
+        "layout": [
+            {"matrix": [0, 0], "x": 31, "y": 0, "flags": 4},
+            {"matrix": [0, 1], "x": 46, "y": 0, "flags": 4},
+            {"matrix": [0, 2], "x": 62, "y": 0, "flags": 4},
+            {"matrix": [0, 3], "x": 77, "y": 7, "flags": 4},
+            {"matrix": [0, 4], "x": 93, "y": 13, "flags": 4},
+            {"matrix": [1, 4], "x": 131, "y": 13, "flags": 4},
+            {"matrix": [1, 3], "x": 147, "y": 7, "flags": 4},
+            {"matrix": [1, 2], "x": 162, "y": 0, "flags": 4},
+            {"matrix": [1, 1], "x": 178, "y": 0, "flags": 4},
+            {"matrix": [1, 0], "x": 193, "y": 0, "flags": 4},
+            {"matrix": [2, 0], "x": 201, "y": 10, "flags": 4},
+            {"matrix": [2, 1], "x": 185, "y": 10, "flags": 4},
+            {"matrix": [2, 2], "x": 170, "y": 10, "flags": 4},
+            {"matrix": [2, 3], "x": 154, "y": 17, "flags": 4},
+            {"matrix": [2, 4], "x": 139, "y": 24, "flags": 4},
+            {"matrix": [3, 4], "x": 85, "y": 24, "flags": 4},
+            {"matrix": [3, 3], "x": 70, "y": 17, "flags": 4},
+            {"matrix": [3, 2], "x": 54, "y": 10, "flags": 4},
+            {"matrix": [3, 1], "x": 39, "y": 10, "flags": 4},
+            {"matrix": [3, 0], "x": 23, "y": 10, "flags": 4},
+            {"matrix": [4, 0], "x": 15, "y": 20, "flags": 4},
+            {"matrix": [4, 1], "x": 31, "y": 20, "flags": 4},
+            {"matrix": [4, 2], "x": 46, "y": 20, "flags": 4},
+            {"matrix": [5, 1], "x": 62, "y": 27, "flags": 4},
+            {"matrix": [5, 0], "x": 77, "y": 34, "flags": 4}
+        ],
+        "max_brightness": 200
+    },
+
     "processor": "atmega32u4",
     "bootloader": "caterina",
     "layouts": {
@@ -110,17 +160,17 @@
                 {"matrix": [4, 1], "x": 3, "y": 4},
                 {"matrix": [4, 0], "x": 4, "y": 4},
 
-                {"matrix": [10, 2], "x": 5, "y": 4},
-                {"matrix": [10, 1], "x": 6, "y": 4},
-                {"matrix": [10, 0], "x": 7, "y": 4},
+                {"matrix": [10, 4], "x": 5, "y": 4},
+                {"matrix": [10, 3], "x": 6, "y": 4},
+                {"matrix": [10, 2], "x": 7, "y": 4},
 
 
 
                 {"matrix": [5, 1], "x": 3, "y": 5},
                 {"matrix": [5, 0], "x": 4, "y": 5},
 
-                {"matrix": [11, 1], "x": 5, "y": 5},
-                {"matrix": [11, 0], "x": 6, "y": 5}
+                {"matrix": [11, 4], "x": 5, "y": 5},
+                {"matrix": [11, 3], "x": 6, "y": 5}
             ]
         }
     }
