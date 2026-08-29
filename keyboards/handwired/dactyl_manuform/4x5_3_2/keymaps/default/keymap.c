@@ -31,11 +31,6 @@ enum layer_names {
 #define HOME_SCLN KC_SCLN
 
 
-#define HRM_MIN_HOLD 350 // milliseconds
-
-static uint16_t hrm_timer[256];
-static uint8_t left_mod_count  = 0;
-static uint8_t right_mod_count = 0;
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -61,32 +56,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  KC_Q   , KC_W    , KC_E    , KC_R    , KC_T    ,                       KC_Y    , KC_U   , KC_I    , KC_O   , KC_P      ,
  HOME_A , HOME_S  , HOME_D  , HOME_F  , KC_G    ,                       KC_H    , HOME_J , HOME_K  , HOME_L , HOME_SCLN ,
  KC_Z   , KC_X    , KC_C    , KC_V    , KC_B    ,                       KC_N    , KC_M   , KC_COMM , KC_DOT , KC_SLSH   ,
-                                         KC_LGUI , KC_SPC  , VIMNAV,            LOWER,   KC_ENT,     KC_RGUI ,                                          ,
-                                                   KC_BSPC , KC_ESC ,     KC_END , KC_LALT
+                    KC_LGUI , KC_BSPC , KC_LCTL ,                       KC_RSFT , KC_LALT, KC_RGUI ,
+                              KC_SPC  , RAISE   ,                       LOWER   , KC_ENT
 ),
-    //
-    // ┌─────┬─────┬─────┬─────┬─────┐               ┌─────┬─────┬─────┬─────┬─────┐
-    // │ f1  │ f2  │ f3  │ f4  │ f5  │               │ f6  │ f7  │ f8  │ f9  │f10  │
-    // ├─────┼─────┼─────┼─────┼─────┤               ├─────┼─────┼─────┼─────┼─────┤
-    // │ 1   │ 2   │ 3   │ 4   │ 5   │               │ 6   │ 7   │ 8   │ 9   │ 0   │
-    // ├─────┼─────┼─────┼─────┼─────┤               ├─────┼─────┼─────┼─────┼─────┤
-    // │f11  │f12  │ pscr│ ins │     │               │left │down │ up  │rght │ del │
-    // ├─────┼─────┼─────┼─────┼─────┤               ├─────┼─────┼─────┼─────┼─────┤
-    // │     │     │     │     │     │               │home │ end │pgup │pgdn │     │
-    // └─────┴─────┴─────┼─────┴─────┘               └─────┴─────┼─────┴─────┴─────┘
-    //                   │     │ NAV │                           │ LOW │     │
-    //                   └─────┴─────┘                           └─────┴─────┘
-    //                   │     │                                 │     │
-    //                   ├─────┼─────┐                           ├─────┼─────┐
-    //                   │     │     │                           │     │     │
-    //                   └─────┴─────┘                           └─────┴─────┘
+
+//
+//      ┌─────┬─────┬─────┬─────┬─────┐               ┌─────┬─────┬─────┬─────┬─────┐
+//      │ f1  │ f2  │ f3  │ f4  │ f5  │               │ f6  │ f7  │ f8  │ f9  │f10  │
+//      ├─────┼─────┼─────┼─────┼─────┤               ├─────┼─────┼─────┼─────┼─────┤
+//      │ 1   │ 2   │ 3   │ 4   │ 5   │               │ 6   │ 7   │ 8   │ 9   │ 0   │
+//      ├─────┼─────┼─────┼─────┼─────┤               ├─────┼─────┼─────┼─────┼─────┤
+//      │f11  │f12  │ pscr│ ins │     │               │left │down │ up  │rght │ del │
+//      ├─────┼─────┼─────┼─────┼─────┤               ├─────┼─────┼─────┼─────┼─────┤
+//      │     │     │     │     │     │               │home │ end │pgup │pgdn │     │
+//      └─────┴─────┴─────┼─────┴─────┘               └─────┴─────┼─────┴─────┴─────┘
+//
+
 [_RAISE] = LAYOUT(
  KC_F1   , KC_F2   , KC_F3   , KC_F4   , KC_F5   ,                         KC_F6   , KC_F7   , KC_F8   , KC_F9   , KC_F10  ,
  KC_1    , KC_2    , KC_3    , KC_4    , KC_5    ,                         KC_6    , KC_7    , KC_8    , KC_9    , KC_0    ,
  KC_F11  , KC_F12  , KC_PSCR , KC_INS  , _______ ,                         KC_LEFT , KC_DOWN , KC_UP   , KC_RGHT , KC_DEL  ,
  _______ , _______ , _______ , _______ , _______ ,                         KC_HOME , KC_END  , KC_PGUP , KC_PGDN , _______ ,
-                     _______ , _______ , VIMNAV  ,                         LOWER  , _______ , _______                    ,
-                               _______ , _______ ,                         _______ , _______                                                  ),
+                     _______ , _______ , _______ ,                         KC_END  , _______ , _______ ,
+                               _______ , RAISE   ,                         LOWER  , _______
+),
 
 //    ┌─────┬─────┬─────┬─────┬─────┐               ┌─────┬─────┬─────┬─────┬─────┐
 //    │  ~  │  !  │  @  │  #  │  $  │               │  ^  │  &  │  *  │  (  │  )  │
@@ -106,8 +99,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  _______ , _______ , KC_LBRC , KC_LCBR , _______ ,                         KC_RCBR , KC_RBRC , KC_PIPE , KC_BSLS , KC_QUES ,
  _______ , _______ , _______ , _______ , _______ ,                         KC_PLUS , KC_MINS , KC_EQL  , KC_UNDS , KC_COLN ,
  _______ , _______ , _______ , _______ , _______ ,                         KC_COMM , KC_DOT  , KC_SLSH , KC_QUES , KC_EXLM ,
- _______ , _______ , _______ ,                         _______ , _______ , _______                    ,
- _______ , _______ ,                         _______ , _______                                                  ),
+                     _______ , _______ , KC_ESC  ,                         _______ , _______ , _______ ,
+                               _______ , _______ ,                         _______ , _______
+),
+
 // ,
 
 //    ┌─────┬──────┬──────┬──────┬─────┬─────┐               ┌─────┬──────┬──────┬──────┬─────┬─────┐
@@ -168,96 +163,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // )
 };
 
-bool is_home_mod(uint16_t keycode) {
-    switch (keycode) {
-        case HOME_A:
-        case HOME_S:
-        case HOME_D:
-        case HOME_F:
-
-        case HOME_J:
-        case HOME_K:
-        case HOME_L:
-        case HOME_SCLN:
-
-            return true;
-    }
-    return false;
-}
-
-bool is_left_hand(keyrecord_t *record) {
-    return record->event.key.col < MATRIX_COLS / 2;
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-
-    if (!is_home_mod(keycode)) return true;
-    bool left = is_left_hand(record);
-    if (record->event.pressed) {
-        hrm_timer[keycode] = timer_read();
-        if (left) left_mod_count++;
-        else right_mod_count++;
-
-        // Force tap if 2+ HRMs same side
-        if ((left && left_mod_count >= 2) || (!left && right_mod_count >= 2)) {
-            register_code16(keycode & 0xFF);
-            unregister_code16(keycode & 0xFF);
-            return false; // skip mod
-        }
-
-    } else {
-        uint16_t held = timer_elapsed(hrm_timer[keycode]);
-
-        if ((left && left_mod_count >= 2) || (!left && right_mod_count >= 2)) {
-            if (left) left_mod_count--;
-            else right_mod_count--;
-            return false;
-        }
-
-        if (held < HRM_MIN_HOLD) {
-            // Short tap → send keycode immediately
-            register_code16(keycode & 0xFF);
-            unregister_code16(keycode & 0xFF);
-            if (left) left_mod_count--;
-            else right_mod_count--;
-            return false;
-        }
-
-        // Long hold → normal mod handled by MT()
-        if (left) left_mod_count--;
-        else right_mod_count--;
-    }
-    return true;
-}
-
-bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
-    if (!is_home_mod(keycode)) return true;
-    bool left = is_left_hand(record);
-    if ((left && left_mod_count >= 2) || (!left && right_mod_count >= 2)) {
-        // Disable mod -> only send tap
-        return false;
-    }
-    return false;
-}
-
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        // Left hand home-row mods
-        case HOME_A:
-        case HOME_S:
-        case HOME_D:
-        case HOME_F:
-            return 270;
-        // Right hand home-row mods
-        case HOME_J:
-        case HOME_K:
-        case HOME_L:
-        case HOME_SCLN:
-            return 270;
-        default:
-            return TAPPING_TERM;
-    }
-}
 
 void keyboard_post_init_user(void) {
     rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
