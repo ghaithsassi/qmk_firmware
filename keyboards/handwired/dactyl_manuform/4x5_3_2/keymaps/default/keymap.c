@@ -19,16 +19,16 @@ enum layer_names {
 #define VIMNAV MO(_VIMNAV)
 
 // Left-hand home row mods
-#define HOME_A LALT_T(KC_A)
-#define HOME_S LGUI_T(KC_S)
-#define HOME_D LSFT_T(KC_D)
-#define HOME_F LCTL_T(KC_F)
+#define HOME_A KC_A
+#define HOME_S KC_S
+#define HOME_D KC_D
+#define HOME_F KC_F
 
 // Right-hand home row mods
-#define HOME_J RCTL_T(KC_J)
-#define HOME_K RSFT_T(KC_K)
-#define HOME_L RGUI_T(KC_L)
-#define HOME_SCLN RALT_T(KC_SCLN)
+#define HOME_J KC_J
+#define HOME_K KC_K
+#define HOME_L KC_L
+#define HOME_SCLN KC_SCLN
 
 
 #define HRM_MIN_HOLD 350 // milliseconds
@@ -61,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  KC_Q   , KC_W    , KC_E    , KC_R    , KC_T    ,                       KC_Y    , KC_U   , KC_I    , KC_O   , KC_P      ,
  HOME_A , HOME_S  , HOME_D  , HOME_F  , KC_G    ,                       KC_H    , HOME_J , HOME_K  , HOME_L , HOME_SCLN ,
  KC_Z   , KC_X    , KC_C    , KC_V    , KC_B    ,                       KC_N    , KC_M   , KC_COMM , KC_DOT , KC_SLSH   ,
-                                         KC_LGUI , KC_SPC  , VIMNAV,            LOWER,        KC_RGUI , KC_ENT                                         ,
+                                         KC_LGUI , KC_SPC  , VIMNAV,            LOWER,   KC_ENT,     KC_RGUI ,                                          ,
                                                    KC_BSPC , KC_ESC ,     KC_END , KC_LALT
 ),
     //
@@ -257,6 +257,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         default:
             return TAPPING_TERM;
     }
+}
+
+void keyboard_post_init_user(void) {
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+    rgb_matrix_set_color_all(255,0,255);
 }
 
 
